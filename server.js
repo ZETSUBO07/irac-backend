@@ -7,11 +7,13 @@ app.use(cors());
 app.use(express.json());
 
 // 1. เชื่อมต่อฐานข้อมูล MySQL
+// 1. เชื่อมต่อฐานข้อมูล MySQL
 const db = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',      // ใส่ username ของคุณ
-  password: '',      // ใส่รหัสผ่านของคุณ
-  database: 'irac_ref'
+  host: process.env.DB_HOST || 'localhost',
+  user: process.env.DB_USER || 'root',
+  password: process.env.DB_PASSWORD || '',
+  database: process.env.DB_NAME || 'irac_ref',
+  port: process.env.DB_PORT || 3306
 });
 
 db.connect(err => {
@@ -146,7 +148,7 @@ app.get('/api/history', (req, res) => {
 // ==========================================
 // คำสั่ง app.listen จะอยู่ล่างสุดเสมอ!
 // ==========================================
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`Backend API รันอยู่ที่ http://localhost:${PORT}`);
+  console.log(`Backend API รันอยู่ที่ Port ${PORT}`);
 });
