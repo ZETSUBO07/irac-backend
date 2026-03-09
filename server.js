@@ -5,13 +5,18 @@ const cors = require('cors');
 const app = express();
 app.use(cors());
 app.use(express.json());
+app.use(cors({
+  origin: '*', // อนุญาตให้ทุกโดเมนเรียกใช้งานได้
+  methods: ['GET', 'POST', 'PUT', 'DELETE'], // อนุญาตให้ใช้คำสั่งเหล่านี้
+}));
 
 // 1. เชื่อมต่อฐานข้อมูล MySQL
 // 1. เชื่อมต่อฐานข้อมูล MySQL
+// โค้ดที่ถูกต้องและปลอดภัย (✅)
 const db = mysql.createConnection({
   host: process.env.DB_HOST || 'localhost',
   user: process.env.DB_USER || 'root',
-  password: process.env.DB_PASSWORD || '',
+  password: process.env.DB_PASSWORD || '', 
   database: process.env.DB_NAME || 'irac_ref',
   port: process.env.DB_PORT || 3306
 });
